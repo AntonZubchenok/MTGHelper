@@ -4,5 +4,12 @@
     <!--Navigation Drawer-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="import_item">Import</string>
+    <string name="gallery_item">Gallery</string>
+    <string name="slideshow_item">Slideshow</string>
+    <string name="tools_item">Tools</string>
+    <string name="share_item">Share</string>
+    <string name="send_item">Send</string>
+    <string name="communicate">Communicate</string>
 
 </resources>
