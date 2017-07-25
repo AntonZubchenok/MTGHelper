@@ -11,9 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zubchenok.mtghelper.R;
-import com.zubchenok.mtghelper.model.Set;
-import com.zubchenok.mtghelper.network.Api;
-import com.zubchenok.mtghelper.network.ApiClient;
+import com.zubchenok.mtghelper.model.SetResponse;
+import com.zubchenok.mtghelper.network.GetRequests;
+import com.zubchenok.mtghelper.network.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,19 +29,18 @@ public class MainActivity extends AppCompatActivity
 
         initNavigationDrawer();
 
-        ApiClient apiClient = Api.getInstance().getApiClient();
-        Call<Set> set = apiClient.getSet("ktk");
+        GetRequests getRequests = RetrofitClient.getRetrofit().create(GetRequests.class);
 
-        set.enqueue(new Callback<Set>() {
+        getRequests.getSetResponse("ktk").enqueue(new Callback<SetResponse>() {
             @Override
-            public void onResponse(Call<Set> call, Response<Set> response) {
-                Set set = response.body();
+            public void onResponse(Call<SetResponse> call, Response<SetResponse> response) {
+                SetResponse set = response.body();
                 TextView textView = (TextView) findViewById(R.id.text);
-                textView.setText(set.getName());
+                textView.setText(set.getSet().getName());
             }
 
             @Override
-            public void onFailure(Call<Set> call, Throwable t) {
+            public void onFailure(Call<SetResponse> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });

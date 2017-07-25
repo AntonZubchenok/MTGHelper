@@ -1,13 +1,13 @@
 package com.zubchenok.mtghelper.network;
 
-import com.zubchenok.mtghelper.model.Set;
+import com.zubchenok.mtghelper.model.SetResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface ApiClient {
+public interface GetRequests {
 
     @GET("sets/{setCode}")
-    Call<Set> getSet(@Path("setCode") String setCode);
+    Call<SetResponse> getSetResponse(@Path("setCode") String setCode);
 }
