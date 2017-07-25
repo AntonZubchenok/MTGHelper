@@ -13,19 +13,7 @@ public class SetResponse {
         return set;
     }
 
-    public class Set {
-
-        @SerializedName("name")
-        @Expose
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+    public void setSet(Set set) {
+        this.set = set;
     }
-
 }

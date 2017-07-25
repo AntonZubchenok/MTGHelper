@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.model.SetResponse;
-import com.zubchenok.mtghelper.network.GetRequests;
 import com.zubchenok.mtghelper.network.RetrofitClient;
+import com.zubchenok.mtghelper.network.get.GetSetRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,37 +28,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         initNavigationDrawer();
-
-        GetRequests getRequests = RetrofitClient.getRetrofit().create(GetRequests.class);
-
-        getRequests.getSetResponse("ktk").enqueue(new Callback<SetResponse>() {
-            @Override
-            public void onResponse(Call<SetResponse> call, Response<SetResponse> response) {
-                SetResponse set = response.body();
-                TextView textView = (TextView) findViewById(R.id.text);
-                textView.setText(set.getSet().getName());
-            }
-
-            @Override
-            public void onFailure(Call<SetResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        sendRequest();
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -83,6 +55,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void initNavigationDrawer() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -92,5 +74,22 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void sendRequest() {
+        GetSetRequest request = RetrofitClient.getRetrofit().create(GetSetRequest.class);
+        request.getSet("ktk").enqueue(new Callback<SetResponse>() {
+            @Override
+            public void onResponse(Call<SetResponse> call, Response<SetResponse> response) {
+                SetResponse set = response.body();
+                TextView textView = (TextView) findViewById(R.id.text);
+                textView.setText(set.getSet().getName());
+            }
+
+            @Override
+            public void onFailure(Call<SetResponse> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
