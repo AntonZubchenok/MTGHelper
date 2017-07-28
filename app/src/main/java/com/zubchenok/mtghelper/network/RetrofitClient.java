@@ -1,5 +1,8 @@
 package com.zubchenok.mtghelper.network;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -12,13 +15,23 @@ public class RetrofitClient {
         if (retrofit == null) {
             synchronized (RetrofitClient.class) {
                 if (retrofit == null) {
-                    retrofit = new Retrofit.Builder()
-                            .baseUrl(BASE_URL)
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build();
+                    retrofit = initializeRetrofit();
                 }
             }
         }
+        return retrofit;
+    }
+
+    private static Retrofit initializeRetrofit() {
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new StethoInterceptor())
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(httpClient)
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         return retrofit;
     }
 }
