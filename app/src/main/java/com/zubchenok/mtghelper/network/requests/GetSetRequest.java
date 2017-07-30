@@ -1,4 +1,4 @@
-package com.zubchenok.mtghelper.network.get;
+package com.zubchenok.mtghelper.network.requests;
 
 import com.zubchenok.mtghelper.model.SetResponse;
 

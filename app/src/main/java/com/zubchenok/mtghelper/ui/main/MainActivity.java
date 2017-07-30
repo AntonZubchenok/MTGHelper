@@ -13,9 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zubchenok.mtghelper.R;
+import com.zubchenok.mtghelper.model.CardResponse;
 import com.zubchenok.mtghelper.model.SetResponse;
 import com.zubchenok.mtghelper.network.RetrofitClient;
-import com.zubchenok.mtghelper.network.get.GetSetRequest;
+import com.zubchenok.mtghelper.network.requests.GetCardRequest;
+import com.zubchenok.mtghelper.network.requests.GetSetRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         initNavigationDrawer();
-        sendRequest();
+        sendCardRequest();
     }
 
     @Override
@@ -37,10 +39,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         switch (id) {
-        case R.id.nav_show_set:
-            break;
-        default:
-            throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
+            case R.id.nav_show_set:
+                break;
+            default:
+                throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void sendRequest() {
+    private void sendSetRequest() {
         GetSetRequest request = RetrofitClient.getRetrofit().create(GetSetRequest.class);
         request.getSet("ktk").enqueue(new Callback<SetResponse>() {
             @Override
@@ -108,6 +110,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onFailure(Call<SetResponse> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void sendCardRequest() {
+        GetCardRequest request = RetrofitClient.getRetrofit().create(GetCardRequest.class);
+        request.getCard(386616).enqueue(new Callback<CardResponse>() {
+            @Override
+            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                CardResponse card = response.body();
+                TextView textView = (TextView) findViewById(R.id.set_text);
+                textView.setText(card.getCard().getName());
+            }
+
+            @Override
+            public void onFailure(Call<CardResponse> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });

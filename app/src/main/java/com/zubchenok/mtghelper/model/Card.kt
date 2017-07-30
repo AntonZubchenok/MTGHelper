@@ -16,17 +16,12 @@ class Card(
         val text: String,
         val originalText: String,
         val flavor: String,
-        val artist: String,
         val number: String,
         val power: String,
         val toughness: String,
         val loyalty: String,
         val multiverseid: Int,
-        val imageName: String,
-        val watermark: String,
-        val border: String,
         val set: String,
         val setName: String,
-        val imageUrl: String,
-        val legalities: Array<String>
+        val imageUrl: String
 )
