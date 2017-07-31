@@ -1,5 +1,5 @@
 package com.zubchenok.mtghelper.model
 
 data class CardResponse(
-        val card: Card
+        val cards: List<Card>
 )

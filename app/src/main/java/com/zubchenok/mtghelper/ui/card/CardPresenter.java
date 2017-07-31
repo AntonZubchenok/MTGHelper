@@ -6,6 +6,8 @@ import com.zubchenok.mtghelper.model.CardResponse;
 import com.zubchenok.mtghelper.network.RetrofitClient;
 import com.zubchenok.mtghelper.network.requests.GetCardRequest;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,12 +21,13 @@ public class CardPresenter {
 
     public void loadCard(final String cardName) {
         GetCardRequest request = RetrofitClient.getRetrofit().create(GetCardRequest.class);
-        request.getCard(Integer.valueOf(cardName)).enqueue(new Callback<CardResponse>() {
+        request.getCardsByName(cardName).enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                 if (response.code() == HttpStatus.HTTP_OK) {
                     CardResponse cardResponse = response.body();
-                    Card card = cardResponse.getCard();
+                    List<Card> cards = cardResponse.getCards();
+                    Card card = cards.get(0);
                     view.showCard(card.getName());
                 } else {
                     view.showErrorToast();
