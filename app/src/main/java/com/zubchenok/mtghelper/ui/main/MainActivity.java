@@ -15,9 +15,11 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.zubchenok.mtghelper.R;
+import com.zubchenok.mtghelper.ui.card.CardFragment;
+import com.zubchenok.mtghelper.ui.set.SetFragment;
 
 public class MainActivity extends AppCompatActivity {
-    private final String TAG = MainActivity.class.getCanonicalName();
+    private static final String TAG = MainActivity.class.getCanonicalName();
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView navigationView;
