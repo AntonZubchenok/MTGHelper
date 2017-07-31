@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.zubchenok.mtghelper.R;
 
 public class CardFragment extends Fragment implements ICardView {
@@ -32,6 +34,7 @@ public class CardFragment extends Fragment implements ICardView {
         final EditText editText = (EditText) view.findViewById(R.id.field_card);
         final Button button = (Button) view.findViewById(R.id.btn_load_card);
 
+
         presenter = new CardPresenter(this);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,9 +46,14 @@ public class CardFragment extends Fragment implements ICardView {
 
 
     @Override
-    public void showCard(String cardName) {
+    public void showCard(String cardName, String imageUrl) {
         TextView textView = (TextView) getView().findViewById(R.id.text_card);
         textView.setText(cardName);
+
+        ImageView imageView = (ImageView) getView().findViewById(R.id.image_card);
+//        RequestOptions options = new RequestOptions();
+//        options.centerInside();
+        Glide.with(getContext()).load(imageUrl).into(imageView);
     }
 
     @Override

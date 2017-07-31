@@ -2,6 +2,6 @@ package com.zubchenok.mtghelper.ui.card;
 
 public interface ICardView {
 
-    void showCard(String cardName);
+    void showCard(String cardName, String imageUrl);
     void showErrorToast();
 }

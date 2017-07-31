@@ -27,8 +27,8 @@ public class CardPresenter {
                 if (response.code() == HttpStatus.HTTP_OK) {
                     CardResponse cardResponse = response.body();
                     List<Card> cards = cardResponse.getCards();
-                    Card card = cards.get(0);
-                    view.showCard(card.getName());
+                    Card card = cards.get(1);
+                    view.showCard(card.getName(), card.getImageUrl());
                 } else {
                     view.showErrorToast();
                 }
