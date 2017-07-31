@@ -4,9 +4,7 @@
     <!--Navigation Drawer-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="import_show_set">Show set</string>
-
-    <!--Toolbar-->
-    <string name="action_settings">Settings</string>
+    <string name="show_set">Show set</string>
+    <string name="show_card">Show card</string>
 
 </resources>

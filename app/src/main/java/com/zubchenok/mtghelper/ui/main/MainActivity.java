@@ -1,134 +1,123 @@
 package com.zubchenok.mtghelper.ui.main;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zubchenok.mtghelper.R;
-import com.zubchenok.mtghelper.model.CardResponse;
-import com.zubchenok.mtghelper.model.SetResponse;
-import com.zubchenok.mtghelper.network.RetrofitClient;
-import com.zubchenok.mtghelper.network.requests.GetCardRequest;
-import com.zubchenok.mtghelper.network.requests.GetSetRequest;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
+    private final String TAG = MainActivity.class.getCanonicalName();
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initNavigationDrawer();
-        sendCardRequest();
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = setupDrawerToggle();
+        drawerLayout.addDrawerListener(drawerToggle);
+
+        navigationView = (NavigationView) findViewById(R.id.navigation_drawer_view);
+        setupDrawerListener(navigationView);
+
+        if (savedInstanceState == null) {
+            openInitialFragment();
+        }
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
 
-        switch (id) {
-            case R.id.nav_show_set:
-                break;
-            default:
-                throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void setupDrawerListener(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        handleItemSelection(menuItem);
+                        return true;
+                    }
+                });
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void handleItemSelection(MenuItem menuItem) {
+        Fragment fragment = null;
+        Class fragmentClass;
+
+        switch (menuItem.getItemId()) {
+        case R.id.nav_show_set:
+            fragmentClass = SetFragment.class;
+            break;
+        case R.id.nav_show_card:
+            fragmentClass = CardFragment.class;
+            break;
+        default:
+            throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
         }
 
-        return super.onOptionsItemSelected(item);
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            Log.e(TAG, "handleItemSelection: error with fragment creation", e);
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main_container, fragment).commit();
+        menuItem.setChecked(true);
+        drawerLayout.closeDrawers();
     }
 
-    private void initNavigationDrawer() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.getMenu().getItem(0).setChecked(true);
-        navigationView.setNavigationItemSelectedListener(this);
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     }
 
-    private void sendSetRequest() {
-        GetSetRequest request = RetrofitClient.getRetrofit().create(GetSetRequest.class);
-        request.getSet("ktk").enqueue(new Callback<SetResponse>() {
-            @Override
-            public void onResponse(Call<SetResponse> call, Response<SetResponse> response) {
-                SetResponse set = response.body();
-                TextView textView = (TextView) findViewById(R.id.set_text);
-                textView.setText(set.getSet().getName());
-            }
-
-            @Override
-            public void onFailure(Call<SetResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void sendCardRequest() {
-        GetCardRequest request = RetrofitClient.getRetrofit().create(GetCardRequest.class);
-        request.getCard(386616).enqueue(new Callback<CardResponse>() {
-            @Override
-            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
-                CardResponse card = response.body();
-                TextView textView = (TextView) findViewById(R.id.set_text);
-                textView.setText(card.getCard().getName());
-            }
-
-            @Override
-            public void onFailure(Call<CardResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
+    private void openInitialFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.main_container, new CardFragment());
+        transaction.commit();
     }
 }
