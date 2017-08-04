@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -21,7 +22,15 @@
         <FrameLayout
             android:id="@+id/main_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <fragment
+                android:id="@+id/frag_card"
+                class="com.zubchenok.mtghelper.ui.card.CardFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_card" />
+        </FrameLayout>
     </LinearLayout>
 
     <!-- navigation drawer, который появляется слева -->

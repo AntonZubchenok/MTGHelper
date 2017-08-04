@@ -5,44 +5,41 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.ui.card.CardFragment;
 import com.zubchenok.mtghelper.ui.set.SetFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getCanonicalName();
-    private DrawerLayout drawerLayout;
-    private Toolbar toolbar;
-    private NavigationView navigationView;
+
+    @BindView(R.id.drawer_layout)
+    public DrawerLayout drawerLayout;
+    @BindView(R.id.toolbar)
+    public Toolbar toolbar;
+    @BindView(R.id.navigation_drawer_view)
+    public NavigationView navigationView;
+
     private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
         drawerLayout.addDrawerListener(drawerToggle);
-
-        navigationView = (NavigationView) findViewById(R.id.navigation_drawer_view);
         setupDrawerListener(navigationView);
-
-        if (savedInstanceState == null) {
-            openInitialFragment();
-        }
     }
 
     @Override
@@ -86,24 +83,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleItemSelection(MenuItem menuItem) {
-        Fragment fragment = null;
-        Class fragmentClass;
+        Fragment fragment;
 
         switch (menuItem.getItemId()) {
         case R.id.nav_show_set:
-            fragmentClass = SetFragment.class;
+            fragment = SetFragment.getInstance();
             break;
         case R.id.nav_show_card:
-            fragmentClass = CardFragment.class;
+            fragment = CardFragment.getInstance();
             break;
         default:
             throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
-        }
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            Log.e(TAG, "handleItemSelection: error with fragment creation", e);
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -114,12 +104,5 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-    }
-
-    private void openInitialFragment() {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.main_container, new CardFragment());
-        transaction.commit();
     }
 }
