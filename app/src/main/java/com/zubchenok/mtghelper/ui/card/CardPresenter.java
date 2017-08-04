@@ -5,6 +5,7 @@ import com.zubchenok.mtghelper.model.Card;
 import com.zubchenok.mtghelper.model.CardResponse;
 import com.zubchenok.mtghelper.network.RetrofitClient;
 import com.zubchenok.mtghelper.network.requests.GetCardRequest;
+import com.zubchenok.mtghelper.network.requests.RequestManager;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import retrofit2.Response;
 
 public class CardPresenter {
     ICardView view;
+    RequestManager requestManager = RequestManager.getInstance();
 
     public CardPresenter(ICardView view) {
         this.view = view;
@@ -27,7 +29,7 @@ public class CardPresenter {
                 if (response.code() == HttpStatus.HTTP_OK) {
                     CardResponse cardResponse = response.body();
                     List<Card> cards = cardResponse.getCards();
-                    Card card = cards.get(1);
+                    Card card = cards.get(0);
                     view.showCard(card.getName(), card.getImageUrl());
                 } else {
                     view.showErrorToast();

@@ -51,8 +51,6 @@ public class CardFragment extends Fragment implements ICardView {
         textView.setText(cardName);
 
         ImageView imageView = (ImageView) getView().findViewById(R.id.image_card);
-//        RequestOptions options = new RequestOptions();
-//        options.centerInside();
         Glide.with(getContext()).load(imageUrl).into(imageView);
     }
 

@@ -1,6 +1,6 @@
 package com.zubchenok.mtghelper.model
 
-class Card(
+data class Card(
         val id: String,
         val name: String,
         val names: Array<String>,
@@ -20,7 +20,7 @@ class Card(
         val power: String,
         val toughness: String,
         val loyalty: String,
-        val multiverseid: Int,
+        val multiverseId: Int,
         val set: String,
         val setName: String,
         val imageUrl: String

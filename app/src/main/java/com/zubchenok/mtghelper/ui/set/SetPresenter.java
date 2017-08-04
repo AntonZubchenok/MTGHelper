@@ -1,41 +1,51 @@
 package com.zubchenok.mtghelper.ui.set;
 
-import com.facebook.stetho.server.http.HttpStatus;
-import com.zubchenok.mtghelper.model.Set;
 import com.zubchenok.mtghelper.model.SetResponse;
-import com.zubchenok.mtghelper.network.RetrofitClient;
-import com.zubchenok.mtghelper.network.requests.GetSetRequest;
+import com.zubchenok.mtghelper.network.requests.RequestManager;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class SetPresenter {
 
     ISetView view;
+    RequestManager requestManager = RequestManager.getInstance();
 
     public SetPresenter(ISetView view) {
         this.view = view;
     }
 
     public void loadSet(final String setCode) {
-        GetSetRequest request = RetrofitClient.getRetrofit().create(GetSetRequest.class);
-        request.getSet(setCode).enqueue(new Callback<SetResponse>() {
-            @Override
-            public void onResponse(Call<SetResponse> call, Response<SetResponse> response) {
-                if (response.code() == HttpStatus.HTTP_OK) {
-                    SetResponse setResponse = response.body();
-                    Set set = setResponse.getSet();
-                    view.showSet(set.getName());
-                } else {
-                    view.showErrorMessage();
-                }
-            }
+        Observable<SetResponse> setObservable = requestManager.getSet(setCode);
+        setObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SetResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        //ignore
+                    }
 
-            @Override
-            public void onFailure(Call<SetResponse> call, Throwable t) {
-                view.showErrorMessage();
-            }
-        });
+                    @Override
+                    public void onNext(@NonNull SetResponse setResponse) {
+                        String setName = setResponse.getSet().getName();
+                        view.showSet(setName);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        view.showErrorMessage();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //ignore
+                    }
+                });
     }
+
 }
