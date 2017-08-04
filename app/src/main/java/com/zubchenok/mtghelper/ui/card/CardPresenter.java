@@ -5,7 +5,6 @@ import com.zubchenok.mtghelper.model.Card;
 import com.zubchenok.mtghelper.model.CardResponse;
 import com.zubchenok.mtghelper.network.RetrofitClient;
 import com.zubchenok.mtghelper.network.requests.GetCardRequest;
-import com.zubchenok.mtghelper.network.requests.RequestManager;
 
 import java.util.List;
 
@@ -13,15 +12,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CardPresenter {
+public class CardPresenter implements ICardPresenter {
     ICardView view;
-    RequestManager requestManager = RequestManager.getInstance();
 
     public CardPresenter(ICardView view) {
         this.view = view;
     }
 
-    public void loadCard(final String cardName) {
+    public void onFindCardClicked(final String cardName) {
         GetCardRequest request = RetrofitClient.getRetrofit().create(GetCardRequest.class);
         request.getCardsByName(cardName).enqueue(new Callback<CardResponse>() {
             @Override

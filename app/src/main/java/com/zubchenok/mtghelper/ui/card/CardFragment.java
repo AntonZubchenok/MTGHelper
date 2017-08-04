@@ -26,7 +26,7 @@ public class CardFragment extends Fragment implements ICardView {
     @BindView(R.id.imv_card)
     ImageView imageView;
 
-    CardPresenter presenter = new CardPresenter(this);
+    ICardPresenter presenter = new CardPresenter(this);
 
     public CardFragment() {
         // Required empty public constructor
@@ -54,8 +54,8 @@ public class CardFragment extends Fragment implements ICardView {
         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.btn_load_card)
+    @OnClick(R.id.btn_find_card)
     public void onFindButtonClicked() {
-        presenter.loadCard(editText.getText().toString());
+        presenter.onFindCardClicked(editText.getText().toString());
     }
 }

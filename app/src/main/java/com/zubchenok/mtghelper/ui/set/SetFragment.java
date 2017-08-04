@@ -22,7 +22,7 @@ public class SetFragment extends Fragment implements ISetView {
     @BindView(R.id.txt_set)
     TextView textView;
 
-    SetPresenter presenter = new SetPresenter(this);
+    ISetPresenter presenter = new SetPresenter(this);
 
     public SetFragment() {
         // Required empty public constructor
@@ -49,9 +49,9 @@ public class SetFragment extends Fragment implements ISetView {
         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.btn_load_set)
+    @OnClick(R.id.btn_find_set)
     public void onFindSetButtonClicked() {
-        presenter.loadSet(editText.getText().toString());
+        presenter.onFindSetClicked(editText.getText().toString());
     }
 }
 

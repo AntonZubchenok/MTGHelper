@@ -15,7 +15,7 @@
         android:layout_marginTop="32dp" />
 
     <Button
-        android:id="@+id/btn_load_card"
+        android:id="@+id/btn_find_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edt_card"
@@ -27,7 +27,7 @@
         android:id="@+id/txt_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_load_card"
+        android:layout_below="@id/btn_find_card"
         android:layout_centerHorizontal="true"
         tools:text="TEXT" />
 

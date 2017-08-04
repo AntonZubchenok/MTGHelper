@@ -10,7 +10,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SetPresenter {
+public class SetPresenter implements ISetPresenter {
 
     ISetView view;
     RequestManager requestManager = RequestManager.getInstance();
@@ -19,7 +19,7 @@ public class SetPresenter {
         this.view = view;
     }
 
-    public void loadSet(final String setCode) {
+    public void onFindSetClicked(String setCode) {
         Observable<SetResponse> setObservable = requestManager.getSet(setCode);
         setObservable
                 .subscribeOn(Schedulers.io())
