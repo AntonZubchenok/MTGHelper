@@ -10,16 +10,16 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SetPresenter implements ISetPresenter {
+public class SetPresenter implements SetContract.Presenter {
 
-    ISetView view;
+    SetContract.View view;
     RequestManager requestManager = RequestManager.getInstance();
 
-    public SetPresenter(ISetView view) {
+    public SetPresenter(SetContract.View view) {
         this.view = view;
     }
 
-    public void onFindSetClicked(String setCode) {
+    public void onFindSetButtonClick(String setCode) {
         Observable<SetResponse> setObservable = requestManager.getSet(setCode);
         setObservable
                 .subscribeOn(Schedulers.io())
@@ -38,7 +38,7 @@ public class SetPresenter implements ISetPresenter {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        view.showErrorMessage();
+                        view.showErrorToast();
                     }
 
                     @Override

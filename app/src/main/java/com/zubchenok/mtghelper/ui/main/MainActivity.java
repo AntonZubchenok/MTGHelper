@@ -22,11 +22,11 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.drawer_layout)
-    public DrawerLayout drawerLayout;
+    DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)
-    public Toolbar toolbar;
+    Toolbar toolbar;
     @BindView(R.id.navigation_drawer_view)
-    public NavigationView navigationView;
+    NavigationView navigationView;
 
     private ActionBarDrawerToggle drawerToggle;
 

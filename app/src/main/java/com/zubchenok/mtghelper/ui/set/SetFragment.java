@@ -15,14 +15,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SetFragment extends Fragment implements ISetView {
+public class SetFragment extends Fragment implements SetContract.View {
 
     @BindView(R.id.edt_set)
     EditText editText;
     @BindView(R.id.txt_set)
     TextView textView;
 
-    ISetPresenter presenter = new SetPresenter(this);
+    private SetContract.Presenter presenter = new SetPresenter(this);
 
     public SetFragment() {
         // Required empty public constructor
@@ -45,13 +45,13 @@ public class SetFragment extends Fragment implements ISetView {
     }
 
     @Override
-    public void showErrorMessage() {
+    public void showErrorToast() {
         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.btn_find_set)
-    public void onFindSetButtonClicked() {
-        presenter.onFindSetClicked(editText.getText().toString());
+    public void onFindSetButtonClick() {
+        presenter.onFindSetButtonClick(editText.getText().toString());
     }
 }
 

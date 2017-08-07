@@ -10,7 +10,7 @@
         <item
             android:id="@+id/nav_show_set"
             android:icon="@drawable/ic_show_set"
-            android:title="@string/show_set" />
+            android:title="@string/item_show_set" />
 
     </group>
 

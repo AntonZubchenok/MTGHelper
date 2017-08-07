@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">#455A64</item>
         <item name="colorAccent">#FF6D00</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
 </resources>

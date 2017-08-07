@@ -12,14 +12,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CardPresenter implements ICardPresenter {
-    ICardView view;
+public class CardPresenter implements CardContract.Presenter {
+    CardContract.View view;
 
-    public CardPresenter(ICardView view) {
+    public CardPresenter(CardContract.View view) {
         this.view = view;
     }
 
-    public void onFindCardClicked(final String cardName) {
+    public void onFindCardButtonClick(final String cardName) {
         GetCardRequest request = RetrofitClient.getRetrofit().create(GetCardRequest.class);
         request.getCardsByName(cardName).enqueue(new Callback<CardResponse>() {
             @Override

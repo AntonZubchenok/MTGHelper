@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CardFragment extends Fragment implements ICardView {
+public class CardFragment extends Fragment implements CardContract.View {
 
     @BindView(R.id.edt_card)
     EditText editText;
@@ -26,7 +26,7 @@ public class CardFragment extends Fragment implements ICardView {
     @BindView(R.id.imv_card)
     ImageView imageView;
 
-    ICardPresenter presenter = new CardPresenter(this);
+    private CardContract.Presenter presenter = new CardPresenter(this);
 
     public CardFragment() {
         // Required empty public constructor
@@ -55,7 +55,7 @@ public class CardFragment extends Fragment implements ICardView {
     }
 
     @OnClick(R.id.btn_find_card)
-    public void onFindButtonClicked() {
-        presenter.onFindCardClicked(editText.getText().toString());
+    public void onFindCardButtonClick() {
+        presenter.onFindCardButtonClick(editText.getText().toString());
     }
 }
