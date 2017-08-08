@@ -1,23 +1,26 @@
 package com.zubchenok.mtghelper.ui.card;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.zubchenok.mtghelper.R;
+import com.zubchenok.mtghelper.ui.base.BaseFragment;
+import com.zubchenok.mtghelper.ui.base.BasePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CardFragment extends Fragment implements CardContract.View {
+public class CardFragment extends BaseFragment implements CardContract.View {
+
+    private CardContract.Presenter presenter;
 
     @BindView(R.id.edt_card)
     EditText editText;
@@ -26,14 +29,19 @@ public class CardFragment extends Fragment implements CardContract.View {
     @BindView(R.id.imv_card)
     ImageView imageView;
 
-    private CardContract.Presenter presenter = new CardPresenter(this);
-
     public CardFragment() {
         // Required empty public constructor
     }
 
-    public static CardFragment getInstance() {
+    public static CardFragment newInstance() {
         return new CardFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //фрагмент не пересоздаётся при смене конфигурации (перевороте)
+        setRetainInstance(true);
     }
 
     @Override
@@ -44,18 +52,35 @@ public class CardFragment extends Fragment implements CardContract.View {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (presenter == null) {
+            presenter = new CardPresenter(this);
+        }
+        presenter.subscribe();
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.unsubscribe();
+        super.onDestroy();
+    }
+
+    @Override
     public void showCard(String cardName, String imageUrl) {
         textView.setText(cardName);
         Glide.with(getContext()).load(imageUrl).into(imageView);
     }
 
     @Override
-    public void showErrorToast() {
-        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+    public void setPresenter(BasePresenter presenter) {
+        this.presenter = (CardContract.Presenter) presenter;
     }
 
     @OnClick(R.id.btn_find_card)
     public void onFindCardButtonClick() {
         presenter.onFindCardButtonClick(editText.getText().toString());
     }
+
 }

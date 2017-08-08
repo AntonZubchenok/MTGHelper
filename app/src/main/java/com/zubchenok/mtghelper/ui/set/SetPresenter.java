@@ -38,7 +38,7 @@ public class SetPresenter implements SetContract.Presenter {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        view.showErrorToast();
+                        view.showToast("Error");
                     }
 
                     @Override
@@ -48,4 +48,13 @@ public class SetPresenter implements SetContract.Presenter {
                 });
     }
 
+    @Override
+    public void subscribe() {
+
+    }
+
+    @Override
+    public void unsubscribe() {
+
+    }
 }

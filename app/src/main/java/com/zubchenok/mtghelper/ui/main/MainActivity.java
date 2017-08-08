@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String SET_FRAGMENT_TAG = "SET_FRAGMENT";
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -87,22 +88,23 @@ public class MainActivity extends AppCompatActivity {
 
         switch (menuItem.getItemId()) {
         case R.id.nav_show_set:
-            fragment = SetFragment.getInstance();
+            fragment = SetFragment.newInstance();
             break;
         case R.id.nav_show_card:
-            fragment = CardFragment.getInstance();
+            fragment = CardFragment.newInstance();
             break;
         default:
             throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_container, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.cont_main, fragment).commit();
         menuItem.setChecked(true);
         drawerLayout.closeDrawers();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        return new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     }
 }

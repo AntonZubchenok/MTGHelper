@@ -30,14 +30,24 @@ public class CardPresenter implements CardContract.Presenter {
                     Card card = cards.get(0);
                     view.showCard(card.getName(), card.getImageUrl());
                 } else {
-                    view.showErrorToast();
+                    view.showToast("Error");
                 }
             }
 
             @Override
             public void onFailure(Call<CardResponse> call, Throwable t) {
-                view.showErrorToast();
+                view.showToast("Error");
             }
         });
+    }
+
+    @Override
+    public void subscribe() {
+
+    }
+
+    @Override
+    public void unsubscribe() {
+
     }
 }

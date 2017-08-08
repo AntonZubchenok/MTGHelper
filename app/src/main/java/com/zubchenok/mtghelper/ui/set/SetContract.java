@@ -1,17 +1,21 @@
 package com.zubchenok.mtghelper.ui.set;
 
+import com.zubchenok.mtghelper.ui.base.BasePresenter;
+import com.zubchenok.mtghelper.ui.base.BaseView;
+
 public interface SetContract {
 
-    interface View {
+    interface View extends BaseView<BasePresenter> {
 
         void showSet(String setName);
 
-        void showErrorToast();
     }
 
 
-    interface Presenter {
+    interface Presenter extends BasePresenter {
 
         void onFindSetButtonClick(String setCode);
+
     }
 }
+

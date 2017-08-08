@@ -20,7 +20,7 @@
 
         <!-- Контейнер, куда загружаются фрагменты -->
         <FrameLayout
-            android:id="@+id/main_container"
+            android:id="@+id/cont_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
