@@ -20,6 +20,8 @@ import butterknife.OnClick;
 
 public class CardFragment extends BaseFragment implements CardContract.View {
 
+    public static final String TAG = "CARD_FRAGMENT";
+
     private CardContract.Presenter presenter;
 
     @BindView(R.id.edt_card)

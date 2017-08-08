@@ -18,6 +18,7 @@ import butterknife.OnClick;
 
 public class SetFragment extends BaseFragment implements SetContract.View {
 
+    public static final String TAG = "SET_FRAGMENT";
     private SetContract.Presenter presenter;
 
     @BindView(R.id.edt_set)
