@@ -1,15 +1,19 @@
 package com.zubchenok.mtghelper.ui.card;
 
+import com.zubchenok.mtghelper.ui.base.BasePresenter;
+import com.zubchenok.mtghelper.ui.base.BaseView;
+
 public interface CardContract {
 
-    interface View {
+    interface View extends BaseView<BasePresenter> {
+
         void showCard(String cardName, String imageUrl);
 
-        void showErrorToast();
     }
 
+    interface Presenter extends BasePresenter {
 
-    interface Presenter {
         void onFindCardButtonClick(String setCode);
+
     }
 }

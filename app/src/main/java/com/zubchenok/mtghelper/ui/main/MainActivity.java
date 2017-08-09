@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
 
     private ActionBarDrawerToggle drawerToggle;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +37,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        if (savedInstanceState == null) {
+            fragmentManager = getSupportFragmentManager();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.cont_main, CardFragment.newInstance(), CardFragment.TAG)
+                    .commit();
+        }
+
         setSupportActionBar(toolbar);
         drawerToggle = setupDrawerToggle();
         drawerLayout.addDrawerListener(drawerToggle);
         setupDrawerListener(navigationView);
+
     }
 
     @Override
@@ -84,25 +94,37 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleItemSelection(MenuItem menuItem) {
         Fragment fragment;
+        String tag;
 
         switch (menuItem.getItemId()) {
+
         case R.id.nav_show_set:
-            fragment = SetFragment.getInstance();
+            tag = SetFragment.TAG;
+            fragment = fragmentManager.findFragmentByTag(tag);
+            if (fragment == null) {
+                fragment = SetFragment.newInstance();
+            }
             break;
         case R.id.nav_show_card:
-            fragment = CardFragment.getInstance();
+            tag = CardFragment.TAG;
+            fragment = fragmentManager.findFragmentByTag(tag);
+            if (fragment == null) {
+                fragment = CardFragment.newInstance();
+            }
             break;
         default:
             throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_container, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.cont_main, fragment, tag).commit();
+
         menuItem.setChecked(true);
         drawerLayout.closeDrawers();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        return new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     }
 }
+
