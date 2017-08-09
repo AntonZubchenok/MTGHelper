@@ -13,9 +13,39 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            minifyEnabled false         //не убирает не использующиеся методы
+            testCoverageEnabled true    //показывает процент покрытия классов юнит-тестами
+            useProguard false
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true          //убирает не использующиеся методы
+            useProguard true
+        }
+    }
+
+    productFlavors {
+        mock {
+            applicationIdSuffix = ".mock"
+        }
+
+        prod {
+            applicationIdSuffix = ".prod"
+        }
+    }
+
+    //remove mockRelease build variant because we don't need it
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release'
+                && variant.getFlavors().get(0).name == 'mock') {
+            variant.setIgnore(true);
+        }
+    }
+
+    // always show the result of every unit test, even if it passes
+    testOptions.unitTests.all {
+        testLogging {
+            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
         }
     }
 }
