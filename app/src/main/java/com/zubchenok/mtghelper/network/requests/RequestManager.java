@@ -1,6 +1,6 @@
 package com.zubchenok.mtghelper.network.requests;
 
-import com.zubchenok.mtghelper.model.SetResponse;
+import com.zubchenok.mtghelper.model.entities.SetResponse;
 import com.zubchenok.mtghelper.network.RetrofitClient;
 
 import io.reactivex.Observable;

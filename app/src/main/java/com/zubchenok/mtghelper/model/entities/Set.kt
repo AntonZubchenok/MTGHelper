@@ -1,4 +1,4 @@
-package com.zubchenok.mtghelper.model
+package com.zubchenok.mtghelper.model.entities
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,6 +1,6 @@
 package com.zubchenok.mtghelper.network.requests;
 
-import com.zubchenok.mtghelper.model.SetResponse;
+import com.zubchenok.mtghelper.model.entities.SetResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

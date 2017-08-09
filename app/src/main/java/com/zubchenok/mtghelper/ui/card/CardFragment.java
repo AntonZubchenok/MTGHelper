@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.zubchenok.mtghelper.R;
+import com.zubchenok.mtghelper.injection.CardServiceInjection;
 import com.zubchenok.mtghelper.ui.base.BaseFragment;
 import com.zubchenok.mtghelper.ui.base.BasePresenter;
 
@@ -58,7 +59,7 @@ public class CardFragment extends BaseFragment implements CardContract.View {
         super.onActivityCreated(savedInstanceState);
 
         if (presenter == null) {
-            presenter = new CardPresenter(this);
+            presenter = new CardPresenter(this, CardServiceInjection.provideCardService());
         }
         presenter.subscribe();
     }

@@ -1,6 +1,6 @@
 package com.zubchenok.mtghelper.ui.set;
 
-import com.zubchenok.mtghelper.model.SetResponse;
+import com.zubchenok.mtghelper.model.entities.SetResponse;
 import com.zubchenok.mtghelper.network.requests.RequestManager;
 
 import io.reactivex.Observable;
