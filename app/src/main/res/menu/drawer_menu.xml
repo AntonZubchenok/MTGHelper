@@ -7,11 +7,6 @@
             android:checked="true"
             android:icon="@drawable/ic_show_card"
             android:title="Show card" />
-        <item
-            android:id="@+id/nav_show_set"
-            android:icon="@drawable/ic_show_set"
-            android:title="@string/item_show_set" />
-
     </group>
 
 </menu>

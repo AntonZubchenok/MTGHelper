@@ -13,8 +13,10 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class CardPresenter implements CardContract.Presenter {
+
     private CardContract.View view;
     private ICardService cardService;
+    //на всякий случай
     private CompositeDisposable compositeDisposable;
 
     public CardPresenter(CardContract.View view, ICardService cardService) {

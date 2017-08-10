@@ -14,7 +14,6 @@ import android.view.MenuItem;
 
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.ui.card.CardFragment;
-import com.zubchenok.mtghelper.ui.set.SetFragment;
 import com.zubchenok.mtghelper.util.ActivityUtils;
 
 import butterknife.BindView;
@@ -40,17 +39,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             fragmentManager = getSupportFragmentManager();
-            fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.cont_main, CardFragment.newInstance(), CardFragment.TAG)
-                    .commit();
+            ActivityUtils.addFragmentToActivity(
+                    fragmentManager, CardFragment.newInstance(), R.id.cont_main, CardFragment.TAG);
         }
 
         setSupportActionBar(toolbar);
         drawerToggle = setupDrawerToggle();
         drawerLayout.addDrawerListener(drawerToggle);
         setupDrawerListener(navigationView);
-
     }
 
     @Override
@@ -99,13 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
         switch (menuItem.getItemId()) {
 
-        case R.id.nav_show_set:
-            tag = SetFragment.TAG;
-            fragment = fragmentManager.findFragmentByTag(tag);
-            if (fragment == null) {
-                fragment = SetFragment.newInstance();
-            }
-            break;
         case R.id.nav_show_card:
             tag = CardFragment.TAG;
             fragment = fragmentManager.findFragmentByTag(tag);
@@ -113,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = CardFragment.newInstance();
             }
             break;
+
         default:
             throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
         }

@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.injection.CardServiceInjection;
 import com.zubchenok.mtghelper.ui.base.BaseFragment;
-import com.zubchenok.mtghelper.ui.base.BasePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +21,6 @@ import butterknife.OnClick;
 public class CardFragment extends BaseFragment implements CardContract.View {
 
     public static final String TAG = "CARD_FRAGMENT";
-
     private CardContract.Presenter presenter;
 
     @BindView(R.id.edt_card)
@@ -61,11 +59,13 @@ public class CardFragment extends BaseFragment implements CardContract.View {
         if (presenter == null) {
             presenter = new CardPresenter(this, CardServiceInjection.provideCardService());
         }
+        //на всякий случай
         presenter.subscribe();
     }
 
     @Override
     public void onDestroy() {
+        //на всякий случай
         presenter.unsubscribe();
         super.onDestroy();
     }
@@ -76,14 +76,8 @@ public class CardFragment extends BaseFragment implements CardContract.View {
         Glide.with(getContext()).load(imageUrl).into(imageView);
     }
 
-    @Override
-    public void setPresenter(BasePresenter presenter) {
-        this.presenter = (CardContract.Presenter) presenter;
-    }
-
     @OnClick(R.id.btn_find_card)
     public void onFindCardButtonClick() {
         presenter.onFindCardButtonClick(editText.getText().toString());
     }
-
 }
