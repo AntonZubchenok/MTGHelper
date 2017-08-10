@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.ui.card.CardFragment;
 import com.zubchenok.mtghelper.ui.set.SetFragment;
+import com.zubchenok.mtghelper.util.ActivityUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -116,8 +117,7 @@ public class MainActivity extends AppCompatActivity {
             throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
         }
 
-        fragmentManager.beginTransaction().replace(R.id.cont_main, fragment, tag).commit();
-
+        ActivityUtils.addFragmentToActivity(fragmentManager, fragment, R.id.cont_main, tag);
         menuItem.setChecked(true);
         drawerLayout.closeDrawers();
     }

@@ -5,6 +5,7 @@ import com.zubchenok.mtghelper.network.RetrofitClient;
 import com.zubchenok.mtghelper.network.requests.GetCardRequest;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.Retrofit;
 
 public class Repository implements IRepository {
@@ -12,7 +13,7 @@ public class Repository implements IRepository {
     private Retrofit retrofit = RetrofitClient.getRetrofit();
 
     @Override
-    public Observable<CardResponse> getCards(String cardName) {
+    public Single<CardResponse> getCards(String cardName) {
         GetCardRequest request = retrofit.create(GetCardRequest.class);
          return request.getCardsByName(cardName);
     }

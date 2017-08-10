@@ -2,9 +2,9 @@ package com.zubchenok.mtghelper.model.repository;
 
 import com.zubchenok.mtghelper.model.entities.CardResponse;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface IRepository {
 
-    Observable<CardResponse> getCards(String cardName);
+    Single<CardResponse> getCards(String cardName);
 }

@@ -6,12 +6,10 @@ import com.zubchenok.mtghelper.services.interfaces.ICardService;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class CardPresenter implements CardContract.Presenter {
@@ -26,45 +24,43 @@ public class CardPresenter implements CardContract.Presenter {
     }
 
     public void onFindCardButtonClick(final String cardName) {
-        Observable<CardResponse> responseObservable = cardService.getCards(cardName);
-        responseObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CardResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
 
-                    }
+        //TODO реализовать другие проверки
+        if (cardName.trim().isEmpty()) {
+            view.showToast("Enter card name");
+        } else {
+            compositeDisposable.add(
+                    cardService.getCards(cardName)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeWith(new DisposableSingleObserver<CardResponse>() {
 
-                    @Override
-                    public void onNext(@NonNull CardResponse cardResponse) {
-                        if (cardResponse.getCards() != null) {
-                            List<Card> cards = cardResponse.getCards();
-                            Card card = cards.get(0);
-                            view.showCard(card.getName(), card.getImageUrl());
-                        } else {
-                            view.showToast("Error");
-                        }
-                    }
+                                @Override
+                                public void onSuccess(@NonNull CardResponse cardResponse) {
+                                    if (cardResponse.getCards() != null) {
+                                        List<Card> cards = cardResponse.getCards();
+                                        Card card = cards.get(0);
+                                        view.showCard(card.getName(), card.getImageUrl());
+                                    } else {
+                                        view.showToast("Error");
+                                    }
+                                }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        view.showToast("Error");
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+                                @Override
+                                public void onError(@NonNull Throwable e) {
+                                    view.showToast("Error");
+                                }
+                            })
+            );
+        }
     }
 
     @Override
     public void subscribe() {
-
     }
 
     @Override
     public void unsubscribe() {
+        compositeDisposable.clear();
     }
 }
