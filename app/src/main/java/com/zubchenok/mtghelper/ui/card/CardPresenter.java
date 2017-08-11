@@ -4,7 +4,7 @@ import com.zubchenok.mtghelper.model.entities.Card;
 import com.zubchenok.mtghelper.model.entities.CardResponse;
 import com.zubchenok.mtghelper.services.interfaces.ICardService;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -40,9 +40,8 @@ public class CardPresenter implements CardContract.Presenter {
                                 @Override
                                 public void onSuccess(@NonNull CardResponse cardResponse) {
                                     if (cardResponse.getCards() != null) {
-                                        List<Card> cards = cardResponse.getCards();
-                                        Card card = cards.get(0);
-                                        view.showCard(card.getName(), card.getImageUrl());
+                                        ArrayList<Card> cards = cardResponse.getCards();
+                                        view.showCards(cards);
                                     } else {
                                         view.showToast("Error");
                                     }

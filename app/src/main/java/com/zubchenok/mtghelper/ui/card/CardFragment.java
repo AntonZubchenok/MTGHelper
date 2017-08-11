@@ -9,10 +9,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.injection.CardServiceInjection;
+import com.zubchenok.mtghelper.model.entities.Card;
 import com.zubchenok.mtghelper.ui.base.BaseFragment;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,9 +73,8 @@ public class CardFragment extends BaseFragment implements CardContract.View {
     }
 
     @Override
-    public void showCard(String cardName, String imageUrl) {
-        textView.setText(cardName);
-        Glide.with(getContext()).load(imageUrl).into(imageView);
+    public void showCards(ArrayList<Card> cards) {
+        navigateToCardListFragment(cards);
     }
 
     @OnClick(R.id.btn_find_card)

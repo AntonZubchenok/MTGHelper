@@ -1,4 +1,3 @@
 
-ksquid:CallToDeprecatedMethod"9Remove this use of "setDrawerListener"; it is deprecated.(ø¶Âßÿÿÿÿÿ8‚ç½˜Ø+
-lsquid:S1301"KReplace this "switch" statement by "if" statements to increase readability.(Ò“ÿšùÿÿÿÿ8ÜÉÿÀØ+
-jsquid:MaximumInheritanceDepth"<This class has 8 parents which is greater than 5 authorized.(Žƒ¿8‚ç½˜Ø+
+gsquid:S1301"KReplace this "switch" statement by "if" statements to increase readability.(¿›Ý”8°¼îàÜ+
+jsquid:MaximumInheritanceDepth"<This class has 8 parents which is greater than 5 authorized.(²Ú±Ž8ñ„ÃÜ+

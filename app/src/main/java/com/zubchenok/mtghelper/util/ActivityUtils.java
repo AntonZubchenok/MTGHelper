@@ -12,6 +12,7 @@ public class ActivityUtils {
                                              String tag) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(containerResId, fragment, tag);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
