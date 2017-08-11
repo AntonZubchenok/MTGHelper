@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.model.entities.Card;
+import com.zubchenok.mtghelper.ui.carddetails.CardDetailsFragment;
 import com.zubchenok.mtghelper.ui.cardlist.CardListFragment;
 import com.zubchenok.mtghelper.util.ActivityUtils;
 import com.zubchenok.mtghelper.util.Const;
@@ -31,10 +32,22 @@ public abstract class BaseFragment extends Fragment implements BaseView<BasePres
         if (fragment == null) {
             fragment = CardListFragment.newInstance();
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(Const.Keys.CARDS, cards);
+            bundle.putParcelableArrayList(Const.Extra.CARDS, cards);
             fragment.setArguments(bundle);
         }
 
         ActivityUtils.addFragmentToActivity(getFragmentManager(), fragment, R.id.cont_main, CardListFragment.TAG);
+    }
+
+    protected void navigateToCardDetailsFragment(Card card) {
+        Fragment fragment = getFragmentManager().findFragmentByTag(CardDetailsFragment.TAG);
+        if (fragment == null) {
+            fragment = CardDetailsFragment.newInstance();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Const.Extra.CARD, card);
+            fragment.setArguments(bundle);
+        }
+
+        ActivityUtils.addFragmentToActivity(getFragmentManager(), fragment, R.id.cont_main, CardDetailsFragment.TAG);
     }
 }

@@ -70,11 +70,11 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.jakewharton:butterknife:8.7.0'
     testCompile 'junit:junit:4.12'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
 }
 repositories {

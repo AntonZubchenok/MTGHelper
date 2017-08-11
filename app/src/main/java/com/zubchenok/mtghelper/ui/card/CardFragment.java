@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.injection.CardServiceInjection;
@@ -27,10 +25,6 @@ public class CardFragment extends BaseFragment implements CardContract.View {
 
     @BindView(R.id.edt_card)
     EditText editText;
-    @BindView(R.id.txt_card)
-    TextView textView;
-    @BindView(R.id.imv_card)
-    ImageView imageView;
 
     public CardFragment() {
         // Required empty public constructor
