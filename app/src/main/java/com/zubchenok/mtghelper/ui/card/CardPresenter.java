@@ -1,8 +1,8 @@
 package com.zubchenok.mtghelper.ui.card;
 
-import com.zubchenok.mtghelper.model.entities.Card;
-import com.zubchenok.mtghelper.model.entities.CardResponse;
-import com.zubchenok.mtghelper.services.interfaces.ICardService;
+import com.zubchenok.mtghelper.model.dto.Card;
+import com.zubchenok.mtghelper.model.dto.CardResponse;
+import com.zubchenok.mtghelper.usecases.interfaces.ICardService;
 
 import java.util.ArrayList;
 

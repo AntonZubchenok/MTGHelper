@@ -8,18 +8,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.zubchenok.mtghelper.MTGHelperApplication;
 import com.zubchenok.mtghelper.R;
+import com.zubchenok.mtghelper.ui.base.BaseActivity;
 import com.zubchenok.mtghelper.ui.card.CardFragment;
-import com.zubchenok.mtghelper.util.ActivityUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             fragmentManager = getSupportFragmentManager();
-            ActivityUtils.addFragmentToActivity(
+            MTGHelperApplication.getApp().getActivityUtils().addFragmentToActivity(
                     fragmentManager, CardFragment.newInstance(), R.id.cont_main, CardFragment.TAG);
         }
 
@@ -87,6 +88,25 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                hideKeyboard();
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
     }
 
     private void handleItemSelection(MenuItem menuItem) {
@@ -107,7 +127,10 @@ public class MainActivity extends AppCompatActivity {
             throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
         }
 
-        ActivityUtils.addFragmentToActivity(fragmentManager, fragment, R.id.cont_main, tag);
+
+        MTGHelperApplication.getApp().getActivityUtils()
+                .addFragmentToActivity(fragmentManager, fragment, R.id.cont_main, tag);
+
         menuItem.setChecked(true);
         drawerLayout.closeDrawers();
     }
@@ -116,5 +139,6 @@ public class MainActivity extends AppCompatActivity {
         return new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     }
+
 }
 

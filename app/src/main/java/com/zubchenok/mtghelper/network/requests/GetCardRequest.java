@@ -1,6 +1,6 @@
 package com.zubchenok.mtghelper.network.requests;
 
-import com.zubchenok.mtghelper.model.entities.CardResponse;
+import com.zubchenok.mtghelper.model.dto.CardResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

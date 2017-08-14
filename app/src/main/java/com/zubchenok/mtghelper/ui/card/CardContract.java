@@ -1,6 +1,6 @@
 package com.zubchenok.mtghelper.ui.card;
 
-import com.zubchenok.mtghelper.model.entities.Card;
+import com.zubchenok.mtghelper.model.dto.Card;
 import com.zubchenok.mtghelper.ui.base.BasePresenter;
 import com.zubchenok.mtghelper.ui.base.BaseView;
 

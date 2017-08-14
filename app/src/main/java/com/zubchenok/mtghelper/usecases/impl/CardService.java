@@ -1,9 +1,9 @@
-package com.zubchenok.mtghelper.services.impl;
+package com.zubchenok.mtghelper.usecases.impl;
 
-import com.zubchenok.mtghelper.model.entities.CardResponse;
+import com.zubchenok.mtghelper.model.dto.CardResponse;
 import com.zubchenok.mtghelper.model.repository.IRepository;
 import com.zubchenok.mtghelper.model.repository.Repository;
-import com.zubchenok.mtghelper.services.interfaces.ICardService;
+import com.zubchenok.mtghelper.usecases.interfaces.ICardService;
 
 import io.reactivex.Single;
 

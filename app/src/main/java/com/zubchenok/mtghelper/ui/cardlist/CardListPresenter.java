@@ -1,6 +1,6 @@
 package com.zubchenok.mtghelper.ui.cardlist;
 
-import com.zubchenok.mtghelper.model.entities.Card;
+import com.zubchenok.mtghelper.model.dto.Card;
 
 import java.util.ArrayList;
 

@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.injection.CardServiceInjection;
-import com.zubchenok.mtghelper.model.entities.Card;
+import com.zubchenok.mtghelper.model.dto.Card;
 import com.zubchenok.mtghelper.ui.base.BaseFragment;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.zubchenok.mtghelper.injection;
 
-import com.zubchenok.mtghelper.services.impl.CardService;
-import com.zubchenok.mtghelper.services.interfaces.ICardService;
+import com.zubchenok.mtghelper.usecases.impl.CardService;
+import com.zubchenok.mtghelper.usecases.interfaces.ICardService;
 
 public class CardServiceInjection {
 

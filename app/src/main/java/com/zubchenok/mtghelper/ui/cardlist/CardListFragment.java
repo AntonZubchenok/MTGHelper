@@ -15,7 +15,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.zubchenok.mtghelper.R;
-import com.zubchenok.mtghelper.model.entities.Card;
+import com.zubchenok.mtghelper.model.dto.Card;
 import com.zubchenok.mtghelper.ui.base.BaseFragment;
 import com.zubchenok.mtghelper.util.Const;
 

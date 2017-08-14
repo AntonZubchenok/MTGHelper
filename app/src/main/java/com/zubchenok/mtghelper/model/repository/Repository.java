@@ -1,10 +1,9 @@
 package com.zubchenok.mtghelper.model.repository;
 
-import com.zubchenok.mtghelper.model.entities.CardResponse;
+import com.zubchenok.mtghelper.model.dto.CardResponse;
 import com.zubchenok.mtghelper.network.RetrofitClient;
 import com.zubchenok.mtghelper.network.requests.GetCardRequest;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.Retrofit;
 

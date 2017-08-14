@@ -1,19 +1,15 @@
 package com.zubchenok.mtghelper.ui.base;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.zubchenok.mtghelper.MTGHelperApplication;
 import com.zubchenok.mtghelper.R;
-import com.zubchenok.mtghelper.model.entities.Card;
+import com.zubchenok.mtghelper.model.dto.Card;
 import com.zubchenok.mtghelper.ui.carddetails.CardDetailsFragment;
 import com.zubchenok.mtghelper.ui.cardlist.CardListFragment;
-import com.zubchenok.mtghelper.util.ActivityUtils;
 import com.zubchenok.mtghelper.util.Const;
 
 import java.util.ArrayList;
@@ -32,6 +28,7 @@ public abstract class BaseFragment extends Fragment implements BaseView<BasePres
     }
 
     protected void navigateToCardListFragment(ArrayList<Card> cards) {
+                ((BaseActivity) getActivity()).hideKeyboard();
         Fragment fragment = getFragmentManager().findFragmentByTag(CardListFragment.TAG);
         if (fragment == null) {
             fragment = CardListFragment.newInstance();
@@ -40,8 +37,8 @@ public abstract class BaseFragment extends Fragment implements BaseView<BasePres
             fragment.setArguments(bundle);
         }
 
-        hideKeyboard();
-        ActivityUtils.addFragmentToActivity(getFragmentManager(), fragment, R.id.cont_main, CardListFragment.TAG);
+        MTGHelperApplication.getApp().getActivityUtils().
+                addFragmentToActivity(getFragmentManager(), fragment, R.id.cont_main, CardListFragment.TAG);
     }
 
     protected void navigateToCardDetailsFragment(Card card) {
@@ -53,18 +50,7 @@ public abstract class BaseFragment extends Fragment implements BaseView<BasePres
             fragment.setArguments(bundle);
         }
 
-        ActivityUtils.addFragmentToActivity(getFragmentManager(), fragment, R.id.cont_main, CardDetailsFragment.TAG);
-    }
-
-    protected void hideKeyboard() {
-        Activity activity = getActivity();
-        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        // check if no view has focus:
-        View v = activity.getCurrentFocus();
-        if (v == null) {
-            return;
-        }
-        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        MTGHelperApplication.getApp().getActivityUtils()
+                .addFragmentToActivity(getFragmentManager(), fragment, R.id.cont_main, CardDetailsFragment.TAG);
     }
 }

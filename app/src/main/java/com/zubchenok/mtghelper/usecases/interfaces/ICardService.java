@@ -1,6 +1,6 @@
-package com.zubchenok.mtghelper.services.interfaces;
+package com.zubchenok.mtghelper.usecases.interfaces;
 
-import com.zubchenok.mtghelper.model.entities.CardResponse;
+import com.zubchenok.mtghelper.model.dto.CardResponse;
 
 import io.reactivex.Single;
 

@@ -1,4 +1,4 @@
-package com.zubchenok.mtghelper.model.entities
+package com.zubchenok.mtghelper.model.dto
 
 import android.os.Parcel
 import android.os.Parcelable
