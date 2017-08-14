@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.injection.CardServiceInjection;
@@ -25,6 +26,9 @@ public class CardFragment extends BaseFragment implements CardContract.View {
 
     @BindView(R.id.edt_card)
     EditText editText;
+
+    @BindView(R.id.prb_card_fragment)
+    ProgressBar progressBar;
 
     public CardFragment() {
         // Required empty public constructor
@@ -69,6 +73,16 @@ public class CardFragment extends BaseFragment implements CardContract.View {
     @Override
     public void showCards(ArrayList<Card> cards) {
         navigateToCardListFragment(cards);
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.btn_find_card)

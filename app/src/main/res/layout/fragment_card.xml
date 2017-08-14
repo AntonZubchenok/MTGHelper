@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="32dp"
+        android:inputType="textNoSuggestions" />
 
     <Button
         android:id="@+id/btn_find_card"
@@ -22,5 +23,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
         android:text="@string/item_show_card" />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/prb_card_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

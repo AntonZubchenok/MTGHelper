@@ -26,11 +26,11 @@ public class CardPresenter implements CardContract.Presenter {
     }
 
     public void onFindCardButtonClick(final String cardName) {
-
         //TODO реализовать другие проверки
         if (cardName.trim().isEmpty()) {
             view.showToast("Enter card name");
         } else {
+            view.showProgressBar();
             compositeDisposable.add(
                     cardService.getCards(cardName)
                             .subscribeOn(Schedulers.io())
@@ -41,6 +41,7 @@ public class CardPresenter implements CardContract.Presenter {
                                 public void onSuccess(@NonNull CardResponse cardResponse) {
                                     if (cardResponse.getCards() != null) {
                                         ArrayList<Card> cards = cardResponse.getCards();
+                                        view.hideProgressBar();
                                         view.showCards(cards);
                                     } else {
                                         view.showToast("Error");

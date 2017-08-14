@@ -12,7 +12,12 @@ public interface CardContract {
 
         void showCards(ArrayList<Card> cards);
 
+        void showProgressBar();
+
+        void hideProgressBar();
+
     }
+
 
     interface Presenter extends BasePresenter {
 
