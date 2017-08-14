@@ -30,6 +30,7 @@ public class CardPresenter implements CardContract.Presenter {
         if (cardName.trim().isEmpty()) {
             view.showToast("Enter card name");
         } else {
+            view.hideKeyboard();
             view.showProgressBar();
             compositeDisposable.add(
                     cardService.getCards(cardName)

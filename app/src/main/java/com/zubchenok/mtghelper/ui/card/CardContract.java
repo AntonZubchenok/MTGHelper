@@ -16,6 +16,8 @@ public interface CardContract {
 
         void hideProgressBar();
 
+        void hideKeyboard();
+
     }
 
 

@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.injection.CardServiceInjection;
 import com.zubchenok.mtghelper.model.dto.Card;
+import com.zubchenok.mtghelper.ui.base.BaseActivity;
 import com.zubchenok.mtghelper.ui.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -83,6 +84,11 @@ public class CardFragment extends BaseFragment implements CardContract.View {
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideKeyboard() {
+        ((BaseActivity) getActivity()).hideKeyboard();
     }
 
     @OnClick(R.id.btn_find_card)

@@ -28,14 +28,10 @@ public abstract class BaseFragment extends Fragment implements BaseView<BasePres
     }
 
     protected void navigateToCardListFragment(ArrayList<Card> cards) {
-                ((BaseActivity) getActivity()).hideKeyboard();
-        Fragment fragment = getFragmentManager().findFragmentByTag(CardListFragment.TAG);
-        if (fragment == null) {
-            fragment = CardListFragment.newInstance();
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(Const.Extra.CARDS, cards);
-            fragment.setArguments(bundle);
-        }
+        Fragment fragment = CardListFragment.newInstance();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(Const.Extra.CARDS, cards);
+        fragment.setArguments(bundle);
 
         MTGHelperApplication.getApp().getActivityUtils().
                 addFragmentToActivity(getFragmentManager(), fragment, R.id.cont_main, CardListFragment.TAG);
