@@ -12,15 +12,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.zubchenok.mtghelper.MTGHelperApplication;
+import com.zubchenok.mtghelper.App;
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.ui.base.BaseActivity;
 import com.zubchenok.mtghelper.ui.card.CardFragment;
+import com.zubchenok.mtghelper.util.ActivityUtils;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
+
+    @Inject
+    ActivityUtils activityUtils;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -37,11 +43,11 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        App.getComponent().inject(this);
 
         if (savedInstanceState == null) {
             fragmentManager = getSupportFragmentManager();
-            MTGHelperApplication.getApp().getActivityUtils().addFragmentToActivity(
-                    fragmentManager, CardFragment.newInstance(), R.id.cont_main, CardFragment.TAG);
+            activityUtils.addFragmentToActivity(fragmentManager, CardFragment.newInstance(), R.id.cont_main, CardFragment.TAG);
         }
 
         setSupportActionBar(toolbar);
@@ -127,9 +133,7 @@ public class MainActivity extends BaseActivity {
             throw new IllegalStateException("Navigation Drawer: no handling implementation for menu item");
         }
 
-
-        MTGHelperApplication.getApp().getActivityUtils()
-                .addFragmentToActivity(fragmentManager, fragment, R.id.cont_main, tag);
+        activityUtils.addFragmentToActivity(fragmentManager, fragment, R.id.cont_main, tag);
 
         menuItem.setChecked(true);
         drawerLayout.closeDrawers();

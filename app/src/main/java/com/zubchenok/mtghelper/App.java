@@ -3,22 +3,20 @@ package com.zubchenok.mtghelper;
 import android.app.Application;
 
 import com.facebook.stetho.Stetho;
-import com.zubchenok.mtghelper.util.ActivityUtils;
+import com.zubchenok.mtghelper.injection.AppComponent;
+import com.zubchenok.mtghelper.injection.DaggerAppComponent;
+import com.zubchenok.mtghelper.injection.UtilsModule;
 
+public class App extends Application {
 
-public class MTGHelperApplication extends Application {
-
-    private static MTGHelperApplication instance;
-
-    private ActivityUtils activityUtils;
+    private static AppComponent component;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        instance = this;
+        component = buildComponent();
         initializeStetho();
-        initializeSingletons();
     }
 
     private void initializeStetho() {
@@ -29,16 +27,12 @@ public class MTGHelperApplication extends Application {
         Stetho.initialize(initializer);
     }
 
-    private void initializeSingletons() {
-        activityUtils = ActivityUtils.getInstance();
+    protected AppComponent buildComponent() {
+        return DaggerAppComponent.builder().utilsModule(new UtilsModule()).build();
     }
 
-    public ActivityUtils getActivityUtils() {
-        return activityUtils;
-    }
-
-    public static MTGHelperApplication getApp() {
-        return instance;
+    public static AppComponent getComponent() {
+        return component;
     }
 
 }
