@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.zubchenok.mtghelper.R;
 import com.zubchenok.mtghelper.injection.CardServiceInjection;
@@ -25,11 +24,11 @@ public class CardFragment extends BaseFragment implements CardContract.View {
     public static final String TAG = "CARD_FRAGMENT";
     private CardContract.Presenter presenter;
 
-    @BindView(R.id.edt_card)
+    @BindView(R.id.edt_name)
     EditText editText;
 
-    @BindView(R.id.prb_card_fragment)
-    ProgressBar progressBar;
+//    @BindView(R.id.prb_card_fragment)
+//    ProgressBar progressBar;
 
     public CardFragment() {
         // Required empty public constructor
@@ -78,12 +77,12 @@ public class CardFragment extends BaseFragment implements CardContract.View {
 
     @Override
     public void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
+//        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressBar() {
-        progressBar.setVisibility(View.GONE);
+//        progressBar.setVisibility(View.GONE);
     }
 
     @Override

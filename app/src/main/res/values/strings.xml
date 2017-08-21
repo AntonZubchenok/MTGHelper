@@ -6,7 +6,50 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="item_show_card">Show card</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--Card search-->
+    <string name="hint_name">Name</string>
+    <string name="hint_type">Type</string>
+    <string name="hint_subtype">Subtype</string>
+    <string name="cmc">CMC</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="power">Power</string>
+    <string name="toughness">Toughness</string>
+    <string name="rarity">Rarity</string>
+    <string name="set">Set</string>
+    <string name="format">Format</string>
+    <string name="search">Search</string>
+
+    <string-array name="color_search_types">
+        <item>Exact (all selected and no other colors)</item>
+        <item>May include other colors</item>
+    </string-array>
+
+    <string-array name="rarity">
+        <item>Common</item>
+        <item>Uncommon</item>
+        <item>Rare</item>
+        <item>Mythic</item>
+    </string-array>
+
+    <string-array name="sets">
+        <item>Khans of Tarkir</item>
+        <item>Return to Ravnica</item>
+        <item>Gatecrash</item>
+        <item>Theros</item>
+    </string-array>
+
+    <string-array name="formats">
+        <item>Block</item>
+        <item>Standard</item>
+        <item>Modern</item>
+        <item>Legacy</item>
+        <item>Vintage</item>
+        <item>Commander</item>
+        <item></item>
+    </string-array>
 
 </resources>
